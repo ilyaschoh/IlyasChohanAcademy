@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PDF Notes - IlyasChohan Academy</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to right, #001f3f, #003366);
+      color: #ffffff;
+      min-height: 100vh;
+      padding: 30px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      color: #FFD700;
+      text-shadow: 1px 1px 4px #000;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+
+    .pdf-list {
+      width: 100%;
+      max-width: 700px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .pdf-link {
+      padding: 14px 20px;
+      background-color: #FFD700;
+      color: #002147;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 18px;
+      text-align: center;
+      border: none;
+      border-radius: 12px;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
+    }
+
+    .pdf-link:hover {
+      background-color: #ffffff;
+      color: #001f3f;
+      transform: scale(1.05);
+    }
+
+    .back-btn {
+      margin-top: 40px;
+      padding: 12px 24px;
+      background-color: #FFD700;
+      color: #002147;
+      font-weight: bold;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .back-btn:hover {
+      background-color: #ffffff;
+      color: #001f3f;
+      transform: scale(1.05);
+    }
+
+    footer {
+      margin-top: auto;
+      font-size: 0.85rem;
+      color: #cccccc;
+      text-align: center;
+    }
+
+    @media (max-width: 500px) {
+      h1 {
+        font-size: 2rem;
+      }
+      .pdf-link {
+        font-size: 16px;
+        padding: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>📚 PDF Notes</h1>
+
+  <div class="pdf-list" id="pdfList">
+    <p>Loading PDF Notes...</p>
+  </div>
+
+  <a href="index.html" class="back-btn">⬅ Back to Home</a>
+
+  <footer style="margin-top: 40px;">&copy; 2025 IlyasChohan Academy. All Rights Reserved.</footer>
+
+  <!-- Firebase script -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+    import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyA92fDDFbLC6YEav2d9XogqMVVI9A2FI9k",
+      authDomain: "ilyas-chohan-academy.firebaseapp.com",
+      databaseURL: "https://ilyas-chohan-academy-default-rtdb.firebaseio.com",
+      projectId: "ilyas-chohan-academy",
+      storageBucket: "ilyas-chohan-academy.appspot.com",
+      messagingSenderId: "730571584490",
+      appId: "1:730571584490:web:d190a11200d96b1382f893"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+    const listDiv = document.getElementById("pdfList");
+
+    get(ref(db, "pdf_notes")).then(snapshot => {
+      listDiv.innerHTML = ""; // clear loading
+      if (snapshot.exists()) {
+        const data = snapshot.val();
+        for (let key in data) {
+          const note = data[key];
+          const a = document.createElement("a");
+          a.href = note.link;
+          a.target = "_blank";
+          a.className = "pdf-link";
+          a.textContent = `📘 ${note.title}`;
+          listDiv.appendChild(a);
+        }
+      } else {
+        listDiv.innerHTML = "<p>No PDF notes found.</p>";
+      }
+    }).catch(error => {
+      listDiv.innerHTML = "<p>Failed to load PDF notes.</p>";
+      console.error(error);
+    });
+  </script>
+
+</body>
+</html>
