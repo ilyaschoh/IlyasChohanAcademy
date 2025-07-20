@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>IlyasChohan</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to right, #001f3f, #003366);
+      color: #ffffff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .whatsapp-fixed {
+      position: fixed;
+      bottom: 80px;
+      right: 20px;
+      width: 60px;
+      height: 60px;
+      background-color: #25D366;
+      color: white;
+      font-size: 28px;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      z-index: 999;
+      box-shadow: 0 0 10px rgba(37, 211, 102, 0.6);
+      animation: pulseBorder 2s infinite;
+      transition: transform 0.3s ease;
+    }
+
+    .whatsapp-fixed:hover {
+      transform: scale(1.1);
+    }
+
+    @keyframes pulseBorder {
+      0% {
+        box-shadow: 0 0 5px #25D366, 0 0 10px #25D366, 0 0 15px #25D366;
+      }
+      50% {
+        box-shadow: 0 0 15px #25D366, 0 0 25px #25D366, 0 0 35px #25D366;
+      }
+      100% {
+        box-shadow: 0 0 5px #25D366, 0 0 10px #25D366, 0 0 15px #25D366;
+      }
+    }
+
+    .container {
+      max-width: 800px;
+      width: 100%;
+    }
+
+    h1 {
+      font-size: ;
+      text:80px;
+      color: #FFD700;
+      text-shadow: 1px 1px 4px #000;
+      margin-bottom: 78px;
+      margin-top: -15px;
+      margin-left:98px;
+    }
+
+    p {
+      font-size: 1.1rem;
+      margin-top: -90px;
+      margin:-0px 20px 20px;
+      color: #dddddd;
+    }
+
+    .btn-group {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-bottom: 30px;
+    }
+
+    .navy-btn {
+      padding: 14px 28px;
+      background-color: #FFD700;
+      color: #002147;
+      font-weight: bold;
+      font-size: 1rem;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+      transition: all 0.3s ease;
+      text-decoration: none;
+    }
+
+    .navy-btn:hover {
+      background-color: #ffffff;
+      color: #001f3f;
+      transform: scale(1.05);
+    }
+    
+
+    #importantBox {
+      background-color: #FFD700;
+      color: #002147;
+      padding: 15px;
+      border-radius: 10px;
+      font-weight: bold;
+      box-shadow: 0 0 12px rgba(0,0,0,0.2);
+      max-width: 600px;
+      margin: 0 auto 30px;
+      display: none;
+    }
+
+    footer {
+      margin-top: auto;
+      font-size: 0.85rem;
+      color: #cccccc;
+      psotion: fixed;
+    }
+
+    @media (max-width: 500px) {
+      h1 {
+        font-size: 2rem;
+      }
+      .navy-btn {
+        padding: 12px 20px;
+
+    }
+
+    .quote-section {
+      margin-top:50px;
+      text-align: center;
+      min-height: 0px;
+      position: ;
+    }
+
+    .quote {
+      display: ;
+      max-width: 100%;
+      margin: 0 auto;
+      opacity: 0;
+      font-size: 20px;
+      line-height: 1.6;
+      color: #ffffff;
+      font-style: italic;
+      position: absolute;
+      left: 0;
+      right: 0;
+      padding: 0 20px;
+      transition: opacity 1s ease-in-out;
+      word-break: break-word;
+      text-align: center;
+    }
+
+    .quote.show {
+      opacity: 1;
+    }
+  </style>
+  
+  <style>
+  .navy-btn {
+    position: relative;
+    padding: 14px 28px;
+    background-color: #FFD700;
+    color: #002147;
+    font-weight: bold;
+    font-size: 1rem;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    text-decoration: none;
+    overflow: hidden;
+    z-index: 1;
+    transition: all 0.3s ease;
+  }
+
+  .navy-btn::before {
+    content: "";
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(270deg, #FFD700, #FF8C00, #FFD700);
+    background-size: 600% 600%;
+    border-radius: 14px;
+    z-index: -1;
+    animation: moveBorder 4s linear infinite;
+  }
+
+  @keyframes moveBorder {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  .navy-btn:hover {
+    background-color: #ffffff;
+    color: #001f3f;
+    transform: scale(1.05);
+  }
+  .navy-btn {
+  position: relative;
+  padding: 14px 28px;
+  background-color: #FFD700;
+  color: #002147;
+  font-weight: bold;
+  font-size: 1rem;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  text-decoration: none;
+  overflow: hidden;
+  z-index: 1;
+  transition: all 0.3s ease;
+}
+
+.navy-btn::before {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(270deg, #FFD700, #FF8C00, #FFD700);
+  background-size: 600% 600%;
+  border-radius: 14px;
+  z-index: -1;
+  animation: moveBorder 4s linear infinite;
+}
+
+@keyframes moveBorder {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.navy-btn:hover {
+  background-color: #ffffff;
+  color: #001f3f;
+  transform: scale(1.05);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+.navbar {
+  background-color: #FFD700;
+  border-radius: 0 0 px px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  padding: px px;
+  position: fixed;
+  top:0 ;
+  left: ;
+  right: ;
+  z-index: 99;
+  width: 99%;
+}
+
+.navbar ul {
+  list-style: none;
+  display: flex;
+  justify-content: ;
+  align-items: center;
+  margin: ;
+  padding: ;
+  flex-wrap: ;
+}
+
+.navbar ul li {
+  margin: 0 x;
+}
+
+.navbar ul li a {
+  color: #002147;
+  font-weight: bold;
+  text-decoration: none;
+  font-size: 1rem;
+  padding: 8px 14px;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+}
+
+.navbar ul li a:hover {
+  background-color: #ffffff;
+  color: #001f3f;
+}
+
+
+
+
+
+
+/* ☰ Menu Button on top-left */
+.menu-toggle {
+  position: fixed;
+  top: 8px;
+  left: 10px;
+  background-color: #FFD700;
+  color: #002147;
+  font-weight: bold;
+  font-size: 1.2rem;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  z-index: 1000;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+}
+
+/* Dropdown Navbar (auto width based on content) */
+.navbar {
+  position: fixed;
+  top: 50px;
+  left: 10px;
+  background-color: #FFD700;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  border-radius: 12px;
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.4s ease;
+  z-index: 999;
+  width: max-content;
+}
+
+/* When menu is open */
+.navbar.open {
+  max-height: 500px;
+}
+
+/* List inside menu */
+.navbar ul {
+  list-style: none;
+  padding: 10px;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Each item */
+.navbar ul li {
+  margin: 4px 0;
+}
+
+/* Links */
+.navbar ul li a {
+  color: #002147;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1rem;
+  display: block;
+  padding: 6px 12px;
+  border-radius: 6px;
+  transition: background-color 0.3s;
+  white-space: nowrap;
+}
+
+/* Hover effect */
+.navbar ul li a:hover {
+  background-color: #ffffff;
+  color: #001f3f;
+}
+.brand{color:red;
+font-size:30px;
+right:1990px;
+margin:0px 0px; px;
+margin-right:90px;}
+</style>
+</head>
+<body>
+
+  <body>
+<h1>Ilyas Chohan </h1>
+  <!-- WhatsApp Button -->
+  <button class="whatsapp-fixed" onclick="openWhatsApp()">🗨️</button>
+
+  <!-- Header with menu + logo -->
+<div class="top-bar">
+  <div class="menu-toggle" onclick="toggleNavbar()">☰ Menu</div>
+  
+</div>
+
+<!-- Dropdown Navigation -->
+<nav class="navbar" id="navbar">
+  <ul>
+    <li><a href="index.html">🏠 Home</a></li>
+    <li><a href="practice.html">📝 Practice</a></li>
+    <li><a href="login.html">🚀 Start Test</a></li>
+    <li><a href="pdf.html" target="_blank">📄 PDF Notes</a></li>
+  </ul>
+</nav>
+
+  <!-- Main Content -->
+  <div class="container">
+    
+    
+
+    <button onclick="toggleImportant()" class="navy-btn" style="margin-bottom: 20px;">📢 Alert 🚨click on me to see announcement</button>
+    <p>Prepare yourself for the Pakistan Forces Test</p>    <div id="importantBox">Loading important message...</div>
+    
+  </div>
+
+  <!-- Quote Section -->
+  <div class="quote-section">
+    <div class="quote show">"Success is not final, failure is not fatal: it is the courage to continue that counts."</div>
+    <div class="quote">"Believe you can and you're halfway there."</div>
+    <div class="quote">"Education is the passport to the future, for tomorrow belongs to those who prepare for it today."</div>
+    <div style="margin-top: 120px;"></div>
+  </div>
+<h2>All Pdfs Are Available Download Now</h2>
+  <footer>&copy; 2025 IlyasChohan Academy. All Rights Reserved.</footer>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+    import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyA92fDDFbLC6YEav2d9XogqMVVI9A2FI9k",
+      authDomain: "ilyas-chohan-academy.firebaseapp.com",
+      databaseURL: "https://ilyas-chohan-academy-default-rtdb.firebaseio.com",
+      projectId: "ilyas-chohan-academy",
+      storageBucket: "ilyas-chohan-academy.appspot.com",
+      messagingSenderId: "730571584490",
+      appId: "1:730571584490:web:d190a11200d96b1382f893"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+    const msgRef = ref(db, 'settings/message');
+    onValue(msgRef, (snapshot) => {
+      const msg = snapshot.val();
+      document.getElementById("importantBox").innerText = msg || "No important message at the moment.";
+    }, (error) => {
+      document.getElementById("importantBox").innerText = "❌ Failed to load message.";
+      console.error(error);
+    });
+  </script>
+
+  <script>
+    const quotes = document.querySelectorAll('.quote');
+    let currentQuote = 0;
+
+    function cycleQuotes() {
+      quotes.forEach((q) => q.classList.remove('show'));
+      quotes[currentQuote].classList.add('show');
+      currentQuote = (currentQuote + 1) % quotes.length;
+    }
+
+    cycleQuotes();
+    setInterval(cycleQuotes, 6900);
+  </script>
+
+  <script>
+    function openWhatsApp() {
+      window.location.href = "https://api.whatsapp.com/send?phone=923053195045&text=Hello%20sir how are you? iam from app ";
+    }
+
+    function toggleImportant() {
+      const box = document.getElementById("importantBox");
+      box.style.display = (box.style.display === "none" || box.style.display === "") ? "block" : "none";
+    }
+  </script>
+  <script>
+  function toggleNavbar() {
+    const navbar = document.getElementById("navbar");
+    navbar.classList.toggle("open");
+  }
+</script>
+
+</body>
+</html>

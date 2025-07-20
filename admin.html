@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Panel - IlyasChohan Academy</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+      
+      
+      
+      
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to right, #001f3f, #003366);
+      color: #ffffff;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1, h2 {
+      color: #FFD700;
+      text-align: center;
+    }
+
+    .section {
+      background-color: #002a4d;
+      padding: 20px;
+      margin: 20px auto;
+      border-radius: 10px;
+      max-width: 800px;
+      box-shadow: 0 0 15px rgba(255, 215, 0, 0.2);
+    }
+
+
+
+
+    input, textarea, select, button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      margin-bottom: 20px;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+    }
+
+    button {
+      background-color: #FFD700;
+      color: #002147;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background-color: #ffffff;
+    }
+
+    #adminContent {
+      display: none;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 50px;
+      font-size: 0.85rem;
+      color: #ccc;
+    }
+  </style>
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</head>
+<body>
+
+  <h1>⚓ Admin Panel - IlyasChohan Navy Academy</h1>
+
+  <!-- Login Section -->
+  <div class="section" id="loginSection">
+    <h2>🔐 Admin Login</h2>
+    <input type="password" id="adminPassword" placeholder="Enter admin password" />
+    <button onclick="checkLogin()">Login</button>
+  </div>
+
+  <!-- Admin Panel Content -->
+  <div id="adminContent">
+
+    <!-- Important Message Section -->
+    <div class="section">
+      <h2>📢 Important Message</h2>
+      <textarea id="importantMessage" rows="3" placeholder="Enter message to show on home page"></textarea>
+      <button onclick="saveMessage()">Save Message</button>
+    </div>
+
+    <!-- Timer Settings -->
+    <div class="section">
+      <h2>⏱️ Test Timer</h2>
+      <input type="number" id="testTimer" placeholder="Enter test time in minutes" />
+      <button onclick="saveTimer()">Save Timer</button>
+    </div>
+
+<!-- Save Results Section -->
+<div class="section">
+  <h2>📄 Candidate Results</h2>
+  <div class="no-print">
+    <button onclick="downloadResults()">Download All Results</button>
+    <button onclick="resetResults()">🗑️ Reset All Results</button>
+    <button onclick="printResults()">🖨️ Print Results</button>
+  </div>
+</div>
+
+<!-- ✅ This is the ONLY result-preview section -->
+<div id="result-preview">
+  <div class="section">
+    <div id="resultsContainer" style="overflow-x:auto; margin-top: 20px;">
+      <table id="resultsTable" border="1" style="width:100%; text-align:center; border-collapse: collapse; background-color: #001f3f; color: white;">
+        <thead style="background-color:#003366;">
+          <tr>
+            <th>Name</th>
+            <th>Father Name</th>
+            <th>Caste</th>
+            <th>Phone</th>
+            <th>Score</th>
+            <th>Percentage</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+    <!-- Practice Questions -->
+    <!-- Practice Questions Section -->
+<div class="section">
+  <h2>📝 Practice Questions</h2>
+  <textarea id="practiceQuestion" rows="2" placeholder="Enter practice question"></textarea>
+  <input type="text" id="practiceOptionA" placeholder="Option A">
+  <input type="text" id="practiceOptionB" placeholder="Option B">
+  <input type="text" id="practiceOptionC" placeholder="Option C">
+  <input type="text" id="practiceOptionD" placeholder="Option D">
+  <select id="practiceCorrect">
+    <option value="">Select Correct Answer</option>
+    <option value="A">A</option>
+    <option value="B">B</option>
+    <option value="C">C</option>
+    <option value="D">D</option>
+  </select>
+  <button onclick="addPracticeQuestion()">Add Practice Question</button>
+
+  <select id="practiceDeleteSelect">
+  <option value="">-- Select Practice Question to Delete --</option>
+</select>
+<button onclick="deleteSelectedPracticeQuestion()">Delete Selected Practice Question</button>
+</div>
+
+<!-- Test Questions Section -->
+<div class="section">
+  <h2>📘 Test Questions</h2>
+  <textarea id="testQuestion" rows="2" placeholder="Enter test question"></textarea>
+  <input type="text" id="testOptionA" placeholder="Option A">
+  <input type="text" id="testOptionB" placeholder="Option B">
+  <input type="text" id="testOptionC" placeholder="Option C">
+  <input type="text" id="testOptionD" placeholder="Option D">
+  <select id="testCorrect">
+    <option value="">Select Correct Answer</option>
+    <option value="A">A</option>
+    <option value="B">B</option>
+    <option value="C">C</option>
+    <option value="D">D</option>
+  </select>
+  <button onclick="addTestQuestion()">Add Test Question</button>
+
+      <select id="testDeleteSelect">
+  <option value="">-- Select Test Question to Delete --</option>
+</select>
+<button onclick="deleteSelectedTestQuestion()">Delete Selected Test Question</button>
+</div>
+<div class="section">
+  <h2>📄 Add PDF Notes Link</h2>
+<input type="text" id="pdfTitle" placeholder="Enter PDF Title" />
+<input type="url" id="pdfLink" placeholder="Enter Google Drive or PDF Link" />
+<button onclick="addPdfNote()">➕ Add PDF Note</button>
+
+<select id="pdfDeleteSelect">
+  <option value="">-- Select PDF Note to Delete --</option>
+</select>
+<button onclick="deleteSelectedPdfNote()">🗑️ Delete Selected PDF Note</button>
+  <footer>&copy; 2025 IlyasChohan Academy. All Rights Reserved.</footer>
+
+  <!-- Firebase + Script -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+    import { getDatabase, ref, set, push, get } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyA92fDDFbLC6YEav2d9XogqMVVI9A2FI9k",
+      authDomain: "ilyas-chohan-academy.firebaseapp.com",
+      databaseURL: "https://ilyas-chohan-academy-default-rtdb.firebaseio.com",
+      projectId: "ilyas-chohan-academy",
+      storageBucket: "ilyas-chohan-academy.appspot.com",
+      messagingSenderId: "730571584490",
+      appId: "1:730571584490:web:d190a11200d96b1382f893"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+    // Login check
+   window.checkLogin = function () {
+  const input = document.getElementById("adminPassword").value;
+  const correct = "admin123";
+  if (input === correct) {
+    document.getElementById("loginSection").style.display = "none";
+    document.getElementById("adminContent").style.display = "block";
+    loadResults(); // ⬅️ Already present
+    loadPracticeDropdown(); // ✅ Load practice question dropdown
+    loadTestDropdown();     // ✅ Load test question dropdown
+    loadPdfDropdown(); // ⬅️ For loading PDF dropdown on login
+  } 
+  
+  else {
+    alert("Incorrect password");
+  }
+};
+    
+    
+    
+    
+    
+    
+    
+    function loadPdfDropdown() {
+  get(ref(db, "pdf_notes")).then(snapshot => {
+    const dropdown = document.getElementById("pdfDeleteSelect");
+    dropdown.innerHTML = `<option value="">-- Select PDF Note to Delete --</option>`;
+    if (snapshot.exists()) {
+      const data = snapshot.val();
+      for (let key in data) {
+        const text = data[key].title || "Untitled PDF";
+        const option = document.createElement("option");
+        option.value = key;
+        option.textContent = text.length > 60 ? text.slice(0, 60) + "..." : text;
+        dropdown.appendChild(option);
+      }
+    }
+  });
+}
+
+window.deleteSelectedPdfNote = function () {
+  const key = document.getElementById("pdfDeleteSelect").value;
+  if (!key) return alert("⚠️ Please select a PDF note to delete.");
+
+  set(ref(db, `pdf_notes/${key}`), null)
+    .then(() => {
+      alert("✅ Selected PDF Note deleted.");
+      loadPdfDropdown();
+    })
+    .catch(() => alert("❌ Failed to delete PDF Note."));
+};
+    
+    
+   
+
+    // Save Message
+    window.saveMessage = function () {
+      const msg = document.getElementById("importantMessage").value.trim();
+      if (msg !== "") {
+        set(ref(db, "settings/message"), msg)
+          .then(() => alert("✅ Message saved successfully!"))
+          .catch((e) => alert("❌ Failed to save message."));
+      } else {
+        alert("⚠️ Please enter a message.");
+      }
+    };
+
+    // Save Timer
+    window.saveTimer = function () {
+      const mins = document.getElementById("testTimer").value;
+      if (mins) {
+        set(ref(db, "settings/timer"), parseInt(mins))
+          .then(() => alert("⏱️ Timer saved successfully."))
+          .catch(() => alert("❌ Failed to save timer."));
+      } else {
+        alert("Please enter a valid timer.");
+      }
+    };
+
+    // Add Practice Question
+window.addPracticeQuestion = function () {
+  const q = document.getElementById("practiceQuestion").value.trim();
+  const a = document.getElementById("practiceOptionA").value.trim();
+  const b = document.getElementById("practiceOptionB").value.trim();
+  const c = document.getElementById("practiceOptionC").value.trim();
+  const d = document.getElementById("practiceOptionD").value.trim();
+  const correct = document.getElementById("practiceCorrect").value;
+
+  if (q && a && b && c && d && correct) {
+    const questionObj = {
+      question: q,
+      options: { A: a, B: b, C: c, D: d },
+      correct: correct
+    };
+    push(ref(db, "practice_questions"), questionObj)
+      .then(() => {
+        alert("✅ Practice question added!");
+        document.getElementById("practiceQuestion").value = "";
+        document.getElementById("practiceOptionA").value = "";
+        document.getElementById("practiceOptionB").value = "";
+        document.getElementById("practiceOptionC").value = "";
+        document.getElementById("practiceOptionD").value = "";
+        document.getElementById("practiceCorrect").value = "";
+      })
+      .catch(() => alert("❌ Failed to add question."));
+  } else {
+    alert("⚠️ Fill all fields and select correct answer.");
+  }
+};
+
+function loadPracticeDropdown() {
+  get(ref(db, "practice_questions")).then(snapshot => {
+    const dropdown = document.getElementById("practiceDeleteSelect");
+    dropdown.innerHTML = `<option value="">-- Select Practice Question to Delete --</option>`;
+    if (snapshot.exists()) {
+      const data = snapshot.val();
+      for (let key in data) {
+        const text = data[key].question || "Untitled";
+        const option = document.createElement("option");
+        option.value = key;
+        option.textContent = text.length > 60 ? text.slice(0, 60) + "..." : text;
+        dropdown.appendChild(option);
+      }
+    }
+  });
+}
+
+
+
+
+
+window.loadPdfDropdown = function () {
+  get(ref(db, "pdf_notes")).then(snapshot => {
+    const dropdown = document.getElementById("pdfDeleteSelect");
+    dropdown.innerHTML = `<option value="">-- Select PDF Note to Delete --</option>`;
+    if (snapshot.exists()) {
+      const data = snapshot.val();
+      for (let key in data) {
+        const text = data[key].title || "Untitled PDF";
+        const option = document.createElement("option");
+        option.value = key;
+        option.textContent = text.length > 60 ? text.slice(0, 60) + "..." : text;
+        dropdown.appendChild(option);
+      }
+    }
+  }).catch((error) => {
+    console.error("❌ Failed to load PDF dropdown:", error);
+  });
+};
+
+window.deleteSelectedPdfNote = function () {
+  const key = document.getElementById("pdfDeleteSelect").value;
+  if (!key) return alert("⚠️ Please select a PDF note to delete.");
+
+  set(ref(db, `pdf_notes/${key}`), null)
+    .then(() => {
+      alert("✅ Selected PDF Note deleted.");
+      loadPdfDropdown();
+    })
+    .catch((error) => {
+      console.error("❌ Failed to delete PDF Note:", error);
+      alert("❌ Failed to delete PDF Note.");
+    });
+};
+
+
+
+
+
+
+
+
+// Add Test Question
+window.addTestQuestion = function () {
+  const q = document.getElementById("testQuestion").value.trim();
+  const a = document.getElementById("testOptionA").value.trim();
+  const b = document.getElementById("testOptionB").value.trim();
+  const c = document.getElementById("testOptionC").value.trim();
+  const d = document.getElementById("testOptionD").value.trim();
+  const correct = document.getElementById("testCorrect").value;
+
+  if (q && a && b && c && d && correct) {
+    const questionObj = {
+      question: q,
+      options: { A: a, B: b, C: c, D: d },
+      correct: correct
+    };
+    push(ref(db, "test_questions"), questionObj)
+      .then(() => {
+        alert("✅ Test question added!");
+        document.getElementById("testQuestion").value = "";
+        document.getElementById("testOptionA").value = "";
+        document.getElementById("testOptionB").value = "";
+        document.getElementById("testOptionC").value = "";
+        document.getElementById("testOptionD").value = "";
+        document.getElementById("testCorrect").value = "";
+      })
+      .catch(() => alert("❌ Failed to add question."));
+  } else {
+    alert("⚠️ Fill all fields and select correct answer.");
+  }
+};
+function loadTestDropdown() {
+  get(ref(db, "test_questions")).then(snapshot => {
+    const dropdown = document.getElementById("testDeleteSelect");
+    dropdown.innerHTML = `<option value="">-- Select Test Question to Delete --</option>`;
+    if (snapshot.exists()) {
+      const data = snapshot.val();
+      for (let key in data) {
+        const text = data[key].question || "Untitled";
+        const option = document.createElement("option");
+        option.value = key;
+        option.textContent = text.length > 60 ? text.slice(0, 60) + "..." : text;
+        dropdown.appendChild(option);
+      }
+    }
+  });
+}
+
+    // Download Results (just an example, can be improved)
+    window.downloadResults = async function () {
+      const snapshot = await get(ref(db, "results"));
+      if (snapshot.exists()) {
+        const data = snapshot.val();
+        let text = "Name, Father Name, Caste, Phone, Score, Percentage, Date\n";
+        for (let key in data) {
+          const r = data[key];
+          text += `${r.name},${r.father},${r.caste},${r.phone},${r.score},${r.percentage},${r.date}\n`;
+        }
+        const blob = new Blob([text], { type: "text/csv" });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = "results.csv";
+        link.click();
+      } else {
+        alert("⚠️ No results found.");
+      }
+    };
+    window.deleteSelectedPracticeQuestion = function () {
+  const key = document.getElementById("practiceDeleteSelect").value;
+  if (!key) return alert("⚠️ Please select a question to delete.");
+
+  set(ref(db, `practice_questions/${key}`), null)
+    .then(() => {
+      alert("✅ Selected practice question deleted.");
+      loadPracticeDropdown(); // dropdown refresh
+    })
+    .catch(() => alert("❌ Failed to delete practice question."));
+};window.deleteSelectedTestQuestion = function () {
+  const key = document.getElementById("testDeleteSelect").value;
+  if (!key) return alert("⚠️ Please select a question to delete.");
+
+  set(ref(db, `test_questions/${key}`), null)
+    .then(() => {
+      alert("✅ Selected test question deleted.");
+      loadTestDropdown(); // dropdown refresh
+    })
+    .catch(() => alert("❌ Failed to delete test question."));
+};
+    
+    
+    // Reset All Results
+window.resetResults = async function () {
+  if (confirm("⚠️ Are you sure you want to delete ALL results? This cannot be undone.")) {
+    try {
+      await set(ref(db, "results"), null);
+      alert("🗑️ All candidate results have been deleted.");
+    } catch (error) {
+      alert("❌ Failed to reset results.");
+    }
+  }
+};
+    
+    
+    
+    function loadResults() {
+  get(ref(db, "results")).then(snapshot => {
+    if (snapshot.exists()) {
+      const data = snapshot.val();
+      const tbody = document.querySelector("#resultsTable tbody");
+      tbody.innerHTML = "";
+      Object.values(data).forEach(result => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${result.name || ""}</td>
+          <td>${result.fname || ""}</td>
+          <td>${result.caste || ""}</td>
+          <td>${result.phone || ""}</td>
+          <td>${result.score || ""}</td>
+          <td>${result.percentage || ""}%</td>
+          <td>${result.date || ""}</td>
+        `;
+        tbody.appendChild(row);
+      });
+    }
+  }).catch(err => {
+    console.error("Failed to load results", err);
+  });
+}
+    window.addPdfNote = function () {
+  const title = document.getElementById("pdfTitle").value.trim();
+  const link = document.getElementById("pdfLink").value.trim();
+
+  if (title && link) {
+    const pdfObj = { title, link };
+    push(ref(db, "pdf_notes"), pdfObj)
+      .then(() => {
+        alert("✅ PDF Note added!");
+        document.getElementById("pdfTitle").value = "";
+        document.getElementById("pdfLink").value = "";
+      })
+      .catch(() => alert("❌ Failed to add PDF Note."));
+  } else {
+    alert("⚠️ Please enter both title and link.");
+  }
+};
+      
+// Inside <script type="module">
+
+ </script>
+
+<script>
+function printResults() {
+  const table = document.querySelector("#resultsTable");
+  if (!table) {
+    alert("Results not found!");
+    return;
+  }
+
+  const htmlContent = `
+    <html>
+      <head>
+        <title>Candidate Results</title>
+        <style>
+          body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+          }
+          h2 {
+            text-align: center;
+            margin-bottom: 20px;
+          }
+          table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: auto;
+          }
+          th, td {
+            border: 1px solid #333;
+            padding: 8px;
+            text-align: center;
+          }
+          th {
+            background-color: #004080;
+            color: white;
+          }
+          td {
+            background-color: #2a7ff9;
+          }or: black;
+}
+        </style>
+      </head>
+      <body>
+        <h2>Candidate Results</h2>
+        ${table.outerHTML}
+        <script>
+          setTimeout(function() {
+            window.print();
+            window.onafterprint = function() {
+              window.close();
+            };
+          }, 180000); // 3 minutes = 180000 milliseconds
+        <\/script>
+      </body>
+    </html>
+  `;
+
+  const printWindow = window.open('', '', 'width=800,height=600');
+  printWindow.document.open();
+  printWindow.document.write(htmlContent);
+  printWindow.document.close();
+}
+</script>  
+  
+</body>
+</html>

@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Practice Test | IlyasChohan Academy</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet"/>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to right, #002147, #003366);
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+      color: #FFD700;
+      text-shadow: 1px 1px 3px #000;
+    }
+
+    .question-box {
+      background: rgba(255, 255, 255, 0.05);
+      margin: 15px auto;
+      padding: 15px;
+      border-radius: 10px;
+      max-width: 800px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+      text-align: left;
+    }
+
+    .question-box h3 {
+      color: #ffffff;
+      font-size: 1.1rem;
+    }
+
+    .answer {
+      margin-top: 8px;
+      color: #00FF99;
+      font-weight: bold;
+    }
+
+    .nav-buttons {
+      margin-top: 20px;
+    }
+
+    .nav-buttons button {
+      background-color: #FFD700;
+      border: none;
+      padding: 10px 20px;
+      color: #002147;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      margin: 0 10px;
+      box-shadow: 0 0 8px rgba(255,215,0,0.6);
+    }
+
+    .nav-buttons button:hover {
+      background: #ffffff;
+      color: #001f3f;
+    }
+
+    /* 🔵 Loader */
+    #loader {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 80vh;
+    }
+
+    .spinner {
+      width: 60px;
+      height: 60px;
+      border: 8px solid #fff;
+      border-top: 8px solid #FFD700;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    #questionContainer {
+      display: none;
+    }
+  .circle-home-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 60px;
+  height: 60px;
+  background-color: #FFB200;
+  color: white;
+  font-size: 28px;
+  line-height: 60px;
+  text-align: center;
+  border-radius: 50%;
+  text-decoration: none;
+  z-index: 999;
+  border: 3px solid #FFB200;
+  box-shadow: 0 0 10px #FFB200;
+  animation: glow-border 1.5s infinite ease-in-out;
+  transition: transform 0.2s ease;
+}
+
+.circle-home-btn:hover {
+  transform: scale(1.1);
+}
+
+@keyframes glow-border {
+  0% {
+    box-shadow: 0 0 5px #ff001f, 0 0 10px #FFB200;
+  }
+  50% {
+    box-shadow: 0 0 15px #ff001f, 0 0 25px #FFB200;
+  }
+  100% {
+    box-shadow: 0 0 5px #ff001f, 0 0 10px #FFB200;
+  }
+}
+  .circle-home-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 60px;
+  height: 60px;
+  background-color: #FFB200;
+  color: white;
+  font-size: 28px;
+  line-height: 60px;
+  text-align: center;
+  border-radius: 50%;
+  text-decoration: none;
+  z-index: 999;
+  border: 3px solid #FFB200;
+  box-shadow: 0 0 10px #FFB200;
+  animation: glow-border 1.5s infinite ease-in-out;
+  transition: transform 0.2s ease;
+}
+
+.circle-home-btn:hover {
+  transform: scale(1.1);
+}
+
+@keyframes glow-border {
+  0% {
+    box-shadow: 0 0 5px #ff001f, 0 0 10px #FFB200;
+  }
+  50% {
+    box-shadow: 0 0 15px #ff001f, 0 0 25px #FFB200;
+  }
+  100% {
+    box-shadow: 0 0 5px #ff001f, 0 0 10px #FFB200;
+  }
+}
+
+
+
+  </style>
+</head>
+<body>
+    <a href="index.html" class="circle-home-btn" title="Go to Home">🏠</a>
+
+  <h1>Practice Test</h1>
+
+  <!-- 🔄 Loader -->
+  <div id="loader">
+    <div class="spinner"></div>
+  </div>
+
+  <!-- 📋 Questions -->
+  <div id="questionContainer"></div>
+
+  <div class="nav-buttons">
+    <button onclick="prevPage()">⬅️Previous</button>
+    <button onclick="nextPage()">Next➡️</button>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+    import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyA92fDDFbLC6YEav2d9XogqMVVI9A2FI9k",
+      authDomain: "ilyas-chohan-academy.firebaseapp.com",
+      databaseURL: "https://ilyas-chohan-academy-default-rtdb.firebaseio.com",
+      projectId: "ilyas-chohan-academy",
+      storageBucket: "ilyas-chohan-academy.appspot.com",
+      messagingSenderId: "730571584490",
+      appId: "1:730571584490:web:d190a11200d96b1382f893"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+    let allQuestions = [];
+    let currentPage = 0;
+    const perPage = 15;
+
+    async function loadQuestions() {
+      const snap = await get(ref(db, 'practice_questions'));
+      if (snap.exists()) {
+        allQuestions = Object.values(snap.val());
+        document.getElementById("loader").style.display = "none";
+        document.getElementById("questionContainer").style.display = "block";
+        showPage(currentPage);
+      } else {
+        document.getElementById("loader").innerHTML = "<p>No questions available.</p>";
+      }
+    }
+
+    function showPage(page) {
+      const container = document.getElementById("questionContainer");
+      container.innerHTML = "";
+      const start = page * perPage;
+      const end = start + perPage;
+      const questionsToShow = allQuestions.slice(start, end);
+
+      questionsToShow.forEach((q, i) => {
+        const correctAnswer = q.options && q.correct in q.options ? q.options[q.correct] : 'Unknown';
+        const box = document.createElement("div");
+        box.className = "question-box";
+        box.innerHTML = `
+          <h3>Q${start + i + 1}: ${q.question}</h3>
+          <p class="answer">Ans: ${correctAnswer}</p>
+        `;
+        container.appendChild(box);
+      });
+    }
+
+    window.nextPage = function () {
+      if ((currentPage + 1) * perPage < allQuestions.length) {
+        currentPage++;
+        showPage(currentPage);
+      }
+    };
+
+    window.prevPage = function () {
+      if (currentPage > 0) {
+        currentPage--;
+        showPage(currentPage);
+      }
+    };
+
+    loadQuestions();
+  </script>
+</body>
+</html>

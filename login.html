@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login - IlyasChohan Navy Academy</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to right, #001f3f, #003366);
+      color: #ffffff;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+    .login-container {
+      background-color: rgba(0, 0, 0, 0.4);
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+      max-width: 500px;
+      width: 100%;
+    }
+    h2 {
+      text-align: center;
+      color: #FFD700;
+      margin-bottom: 20px;
+    }
+    input {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border-radius: 8px;
+      border: none;
+      font-size: 1rem;
+    }
+    .login-btn {
+      background-color: #FFD700;
+      color: #002147;
+      font-weight: bold;
+      border: none;
+      padding: 14px;
+      width: 100%;
+      border-radius: 10px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: 0.3s;
+      margin-top: 10px;
+    }
+    .login-btn:hover {
+      background-color: #fff;
+      color: #001f3f;
+    }
+  .circle-home-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 60px;
+  height: 60px;
+  background-color: #FFB200;
+  color: white;
+  font-size: 28px;
+  line-height: 60px;
+  text-align: center;
+  border-radius: 50%;
+  text-decoration: none;
+  z-index: 999;
+  border: 3px solid #FFB200;
+  box-shadow: 0 0 10px #FFB200;
+  animation: glow-border 1.5s infinite ease-in-out;
+  transition: transform 0.2s ease;
+}
+
+.circle-home-btn:hover {
+  transform: scale(1.1);
+}
+
+@keyframes glow-border {
+  0% {
+    box-shadow: 0 0 5px #ff001f, 0 0 10px #FFB200;
+  }
+  50% {
+    box-shadow: 0 0 15px #ff001f, 0 0 25px #FFB200;
+  }
+  100% {
+    box-shadow: 0 0 5px #ff001f, 0 0 10px #FFB200;
+  }
+}
+  .circle-home-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 60px;
+  height: 60px;
+  background-color: #FFB200;
+  color: white;
+  font-size: 28px;
+  line-height: 60px;
+  text-align: center;
+  border-radius: 50%;
+  text-decoration: none;
+  z-index: 999;
+  border: 3px solid #FFB200;
+  box-shadow: 0 0 10px #FFB200;
+  animation: glow-border 1.5s infinite ease-in-out;
+  transition: transform 0.2s ease;
+}
+
+.circle-home-btn:hover {
+  transform: scale(1.1);
+}
+
+@keyframes glow-border {
+  0% {
+    box-shadow: 0 0 5px #ff001f, 0 0 10px #FFB200;
+  }
+  50% {
+    box-shadow: 0 0 15px #ff001f, 0 0 25px #FFB200;
+  }
+  100% {
+    box-shadow: 0 0 5px #ff001f, 0 0 10px #FFB200;
+  }
+}
+
+  </style>
+</head>
+<body>
+    
+<a href="index.html" class="circle-home-btn" title="Go to Home">🏠</a>
+    
+    
+  <div class="login-container">
+    <h2>Candidate Login</h2>
+    <input type="text" id="name" placeholder="Full Name" required />
+    <input type="text" id="fname" placeholder="Father's Name" required />
+    <input type="text" id="caste" placeholder="Caste" required />
+    <input type="tel" id="phone" placeholder="Phone Number (03XXXXXXXXX)" maxlength="11" required />
+    <button class="login-btn" onclick="submitLogin()">Start Test</button>
+  </div>
+
+  <script>
+    function submitLogin() {
+      const name = document.getElementById('name').value.trim();
+      const fname = document.getElementById('fname').value.trim();
+      const caste = document.getElementById('caste').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+
+      if (!name || !fname || !caste || !phone) {
+        alert("Please fill all fields.");
+        return;
+      }
+
+      // Check Pakistani phone number format (starts with 03 and 11 digits)
+      const phoneRegex = /^03[0-9]{9}$/;
+      if (!phoneRegex.test(phone)) {
+        alert("Enter a valid 11-digit Pakistani phone number (e.g., 03XXXXXXXXX)");
+        return;
+      }
+
+      const candidate = { name, fname, caste, phone };
+      localStorage.setItem("candidate", JSON.stringify(candidate));
+      window.location.href = "test.html";
+    }
+  </script>
+</body>
+</html>
